@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from wtforms import Form, BooleanField, StringField, PasswordField, validators, TextAreaField, IntegerField
-from wtforms.validators import DataRequired
+from wtforms import Form, StringField, PasswordField, validators
+from flask_cors import CORS
+import os
 
 class LoginForm(Form):
     email = StringField("email", validators=[validators.Length(
@@ -29,9 +30,11 @@ class RegisterForm(Form):
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 app = Flask(__name__)
+CORS(app)
 
-app.config['SECRET_KEY'] = 'fj409afjK&4foO*$Jnvo5p95'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
