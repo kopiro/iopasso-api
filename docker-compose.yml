@@ -20,4 +20,4 @@ services:
       - VIRTUAL_HOST=iopasso.kopiro.me
     networks:
       - proxy
-      - kopiro
+      - app
