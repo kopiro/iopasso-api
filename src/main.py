@@ -12,19 +12,18 @@ class LoginForm(Form):
                              validators.DataRequired(message="Password is required")])
 
 class RegisterForm(Form):
-    name = StringField("first_name", validators=[validators.Length(
+    name = StringField("name", validators=[validators.Length(
         min=3, max=25), validators.DataRequired(message="Name is required")])
     email = StringField("email", validators=[validators.Length(
         min=3, max=25), validators.DataRequired(message="Email is required")])
     password = PasswordField("password", validators=[
         validators.DataRequired(message="Password is required"),
-        validators.EqualTo(fieldname="password2",
+        validators.EqualTo(fieldname="password_2",
                            message="The password doesn't match")
     ])
-    password2 = PasswordField("password2", validators=[
+    password_2 = PasswordField("password_2", validators=[
         validators.DataRequired(message="Confirm password is required")])
-    birth_date = PasswordField("birth_date", validators=[
-        validators.DataRequired(message="Birth date is required")])
+    birth_date = PasswordField("birth_date")
 
 
 # init SQLAlchemy so we can use it later in our models
@@ -44,9 +43,9 @@ class User(db.Model):
     __tablename__ = 'usertable'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(15), unique=True)
-    username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(256), unique=True)
+    birth_date = db.Column(db.String(10), unique=True)
 
 
 @app.route('/register', methods=['POST'])
