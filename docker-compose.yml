@@ -1,23 +1,10 @@
 version: "3"
 
-networks:
-  proxy:
-    external: true
-  app:
-
-volumes:
-  data:
-
 services:
   app:
     image: kopiro/iopasso-api
-    restart: unless-stopped
+    build: .
     volumes:
-      - data:/usr/local/app/data
-    environment:
-      - LETSENCRYPT_HOST=iopasso.kopiro.me
-      - LETSENCRYPT_EMAIL=destefano.flavio@gmail.com
-      - VIRTUAL_HOST=iopasso.kopiro.me
-    networks:
-      - proxy
-      - app
+      - ./src:/usr/local/app/src
+    ports:
+      - 5000:5000
