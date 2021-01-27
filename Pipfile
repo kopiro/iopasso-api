@@ -11,6 +11,7 @@ wtforms = "*"
 werkzeug = "*"
 flask-wtf = "*"
 flask-cors = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
