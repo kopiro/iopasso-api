@@ -12,6 +12,9 @@ werkzeug = "*"
 flask-wtf = "*"
 flask-cors = "*"
 python-dotenv = "*"
+flask-jwt = "*"
+flask-jwt-extended = "*"
+sqlalchemy-serializer = "*"
 
 [dev-packages]
 
