@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask import Flask
 from os import getcwd, getenv
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -14,3 +15,4 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
+CORS(app)
