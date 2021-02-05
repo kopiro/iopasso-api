@@ -1,13 +1,15 @@
 FROM python:3-alpine
 
-ENTRYPOINT [ "flask" ]
-CMD [ "run", "--host=0.0.0.0", "--port=80" ]
+ENTRYPOINT [ "/bin/entrypoint" ]
+
+ENV FLASK_APP ./src/app.py
 WORKDIR /usr/local/app
-ENV FLASK_APP "src/main.py"
 EXPOSE 80
 
 RUN pip install pipenv
 COPY Pipfile Pipfile.lock ./
 RUN pipenv install --system --deploy
+
+COPY ./entrypoint.sh /bin/entrypoint
+COPY ./migrations /usr/local/app/migrations
 COPY ./src /usr/local/app/src
-RUN flask db upgrade
