@@ -3,6 +3,7 @@ from flask_jwt_extended import JWTManager
 from flask import Flask
 from os import getcwd, getenv
 from flask_cors import CORS
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 
@@ -14,5 +15,7 @@ app.config['JWT_SECRET_KEY'] = getenv('SECRET_KEY')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
 jwt = JWTManager(app)
 CORS(app)

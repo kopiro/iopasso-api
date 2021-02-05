@@ -79,14 +79,20 @@ def guests_all():
 def events_create():
     form = EventForm(request.form)
     if form.validate() == False:
-        return jsonify({'error': True, 'message': "Validation failed", 'validations': list(form.errors.items())}), 400
+        return jsonify({
+            'error': True,
+            'message': "Validation failed",
+            'validations': list(form.errors.items())
+        }), 400
 
     user_id = get_jwt_identity()
 
     event = Event(
         name=form.name.data,
         address=form.address.data,
-        owner_id=user_id
+        date=form.date.data,
+        owner_id=user_id,
+        guests=[User.query.get(id) for id in request.form.getlist('guests')]
     )
 
     db.session.add(event)
