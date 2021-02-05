@@ -115,7 +115,7 @@ def events_collection_get():
         'limit': limit,
         'page': page,
         'total': total,
-        'data': [event.to_dict(only=('id', 'name', 'owner_id')) for event in events]
+        'data': [event.to_dict(only=('id', 'name', 'owner_id', 'address', 'date')) for event in events]
     })
 
 
