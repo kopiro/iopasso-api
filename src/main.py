@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash
 from forms import LoginForm, RegisterForm, EventForm
 from common import app, db
 from models import User, Event
-from flask import json, jsonify, request
+from flask import jsonify, request
 from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
 
@@ -101,7 +101,7 @@ def events_create():
 @app.route('/events', methods=['GET'])
 @jwt_required
 def events_collection_get():
-    page = request.args.get('page', 1, type=int)
+    page = request.args.get('page', 0, type=int)
     limit = request.args.get('limit', 10, type=int)
     total = Event.query.count()
     events = Event.query.offset(page*limit).limit(limit).all()
