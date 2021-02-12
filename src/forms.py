@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, PasswordField, DateField, validators
+from wtforms import Form, StringField, PasswordField, DateField, DateTimeField, validators
 from wtforms.fields.core import SelectMultipleField
 
 
@@ -39,8 +39,8 @@ class EventForm(Form):
     address = StringField("address", validators=[
         validators.Length(min=3, max=100),
         validators.DataRequired(message='Address is required')])
-    date = DateField("date", validators=[
-        validators.DataRequired(message='Date is required'),
+    datetime = DateTimeField("datetime", validators=[
+        validators.DataRequired(message='DateTime is required'),
     ])
     guests = StringField("guests", validators=[
         validators.DataRequired(message="Guests is required")

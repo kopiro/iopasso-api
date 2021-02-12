@@ -90,7 +90,7 @@ def events_create():
     event = Event(
         name=form.name.data,
         address=form.address.data,
-        date=form.date.data,
+        datetime=form.datetime.data,
         owner_id=user_id,
         guests=[User.query.get(id) for id in request.form.getlist('guests')]
     )
@@ -115,7 +115,7 @@ def events_collection_get():
         'limit': limit,
         'page': page,
         'total': total,
-        'data': [event.to_dict(only=('id', 'name', 'owner_id', 'address', 'date')) for event in events]
+        'data': [event.to_dict(only=('id', 'name', 'owner_id', 'address', 'datetime')) for event in events]
     })
 
 

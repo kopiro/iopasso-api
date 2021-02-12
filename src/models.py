@@ -32,6 +32,6 @@ class Event(db.Model, SerializerMixin):
     owner_id = db.Column(db.Integer, db.ForeignKey(User.id))
     owner = db.relationship(
         "User", backref=db.backref("users", uselist=False))
-    date = db.Column(db.Date)
+    datetime = db.Column(db.DateTime)
     guests = db.relationship('User', secondary=events_guests, lazy='subquery',
                              backref=db.backref('events', lazy=True))
