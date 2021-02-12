@@ -111,11 +111,12 @@ def events_collection_get():
     limit = request.args.get('limit', 10, type=int)
     total = Event.query.count()
     events = Event.query.offset(page*limit).limit(limit).all()
+    base_attrs = ('id', 'name', 'owner_id', 'address', 'datetime')
     return jsonify({
         'limit': limit,
         'page': page,
         'total': total,
-        'data': [event.to_dict(only=('id', 'name', 'owner_id', 'address', 'datetime')) for event in events]
+        'data': [event.to_dict(only=base_attrs) for event in events]
     })
 
 
