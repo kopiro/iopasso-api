@@ -39,8 +39,7 @@ class EventForm(Form):
     address = StringField("address", validators=[
         validators.Length(min=3, max=100),
         validators.DataRequired(message='Address is required')])
-    # WARNING: the space after the format is mandatory!!
-    datetime = DateTimeField("datetime", format="%Y-%m-%dT%H:%M ", validators=[
+    datetime = DateTimeField("datetime", format="%Y-%m-%dT%H:%M", validators=[
         validators.DataRequired(message='DateTime is required'),
     ])
     guests = StringField("guests", validators=[
