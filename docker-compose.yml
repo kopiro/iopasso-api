@@ -7,4 +7,4 @@ services:
     volumes:
       - ./data:/usr/local/app/data
     ports:
-      - 5000:5000
+      - 80:80

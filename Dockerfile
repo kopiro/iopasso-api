@@ -1,15 +1,18 @@
-FROM python:3-alpine
+FROM python:3.9-alpine
 
 ENTRYPOINT [ "/bin/entrypoint" ]
-
-ENV FLASK_APP ./src/app.py
 WORKDIR /usr/local/app
 EXPOSE 80
+ENV FLASK_APP ./src/app.py
+ENV FLASK_ENV "production"
 
-RUN pip install pipenv
+RUN apk --no-cache add musl-dev gcc libffi-dev
+
+RUN pip install --no-cache-dir pipenv==2020.11.15
 COPY Pipfile Pipfile.lock ./
-RUN pipenv install --system --deploy
+RUN pipenv lock --keep-outdated --requirements > requirements.txt
+RUN pip install -r requirements.txt
 
 COPY ./entrypoint.sh /bin/entrypoint
-COPY ./migrations /usr/local/app/migrations
-COPY ./src /usr/local/app/src
+COPY ./migrations ./migrations
+COPY ./src ./src

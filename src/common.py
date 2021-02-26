@@ -1,21 +1,29 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager
-from flask import Flask
-from os import getcwd, getenv
-from flask_cors import CORS
-from flask_migrate import Migrate
+from os import getenv
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import ssl
+from smtplib import SMTP_SSL
+from models import User
 
-app = Flask(__name__)
 
-db_filename = 'sqlite:///' + getcwd() + '/data/db.sqlite'
-app.config['SQLALCHEMY_DATABASE_URI'] = db_filename
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = getenv('SECRET_KEY')
-app.config['JWT_SECRET_KEY'] = getenv('SECRET_KEY')
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
+def build_www_link(path):
+    return getenv("WWW_HOST") + path
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
-jwt = JWTManager(app)
-CORS(app)
+def send_email(email_to, subject, body):
+    msg = MIMEMultipart()
+
+    msg['From'] = getenv("SMTP_FROM")
+    msg['To'] = email_to
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'html'))
+
+    ssl_context = ssl.create_default_context()
+    smtp_server = SMTP_SSL(getenv("SMTP_HOST"), getenv(
+        "SMTP_PORT"), context=ssl_context)
+
+    smtp_server.login(getenv("SMTP_USER"), getenv("SMTP_PASS"))
+
+    smtp_server.sendmail(msg['From'], email_to, msg.as_string())
+    smtp_server.quit()

@@ -1,3 +1,3 @@
 #!/bin/sh
 flask db upgrade
-flask run --host=0.0.0.0 --port=80
+gunicorn --pythonpath ./src --access-logfile - --bind 0.0.0.0:80 app:app
