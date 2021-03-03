@@ -2,6 +2,7 @@ FROM python:3.9-alpine
 
 ENTRYPOINT [ "/bin/entrypoint" ]
 WORKDIR /usr/local/app
+VOLUME /usr/local/app/data
 EXPOSE 80
 ENV FLASK_APP ./src/app.py
 ENV FLASK_ENV "production"
