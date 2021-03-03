@@ -31,6 +31,15 @@ Migrate(app, db)
 jwt = JWTManager(app)
 CORS(app)
 
+
+@app.route('/')
+def route_index():
+    return jsonify({
+        'name': 'iopasso-api',
+        'version': '1.0.0-beta'
+    })
+
+
 app.register_blueprint(routes.auth.blue, url_prefix='/auth')
 app.register_blueprint(routes.events.blue, url_prefix='/events')
 app.register_blueprint(routes.guests.blue, url_prefix='/guests')

@@ -1,8 +1,8 @@
-version: "3"
+version: "3.8"
 
 services:
   app:
-    image: kopiro/iopasso-api
+    image: ghcr.io/kopiro/iopasso-api
     build: .
     volumes:
       - ./data:/usr/local/app/data
